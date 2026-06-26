@@ -1,5 +1,6 @@
 package com.github.fwerther28.rest_with_spring_boot_and_java.controllers;
 
+import com.github.fwerther28.rest_with_spring_boot_and_java.exception.UnsuppoortedMathOperationException;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,12 +15,14 @@ public class MathController {
 			@PathVariable("numberOne") String numberOne,
 			@PathVariable("numberTwo") String numberTwo
 	) throws Exception {
-		if(!isNumeric(numberOne) || !isNumeric(numberTwo)) throw new IllegalArgumentException();
+		if(!isNumeric(numberOne) || !isNumeric(numberTwo))
+			throw new UnsuppoortedMathOperationException("Please set a numeric value!");
 		return convertToDouble(numberOne) + convertToDouble(numberTwo);
 	}
 
 	private Double convertToDouble(String strNumber) throws IllegalArgumentException {
-		if (strNumber == null || strNumber.isEmpty()) throw new IllegalArgumentException();
+		if (strNumber == null || strNumber.isEmpty())
+			throw new UnsuppoortedMathOperationException("Please set a numeric value!");
 		String number = strNumber.replace(",", ".");
 		return Double.parseDouble(number);
 	}
