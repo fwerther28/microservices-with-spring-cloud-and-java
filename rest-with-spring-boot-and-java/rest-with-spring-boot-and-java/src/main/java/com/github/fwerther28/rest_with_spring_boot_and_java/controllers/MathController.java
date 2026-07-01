@@ -1,12 +1,15 @@
 package com.github.fwerther28.rest_with_spring_boot_and_java.controllers;
 
 import com.github.fwerther28.rest_with_spring_boot_and_java.exception.UnsuppoortedMathOperationException;
-import com.github.fwerther28.rest_with_spring_boot_and_java.services.SimpleMath;
+import com.github.fwerther28.rest_with_spring_boot_and_java.math.SimpleMath;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import static com.github.fwerther28.rest_with_spring_boot_and_java.converters.NumberConverter.convertToDouble;
+import static com.github.fwerther28.rest_with_spring_boot_and_java.converters.NumberConverter.isNumeric;
 
 @RestController
 @RequestMapping("/math")
@@ -87,24 +90,9 @@ public class MathController {
 			throw new UnsuppoortedMathOperationException("Square root of a negative number is not allowed");
 		}
 
-		return math.squareRoot(numberConverted);
+		return math.squareRoot(numberConverted) ;
 	}
 
-
-	private Double convertToDouble(String strNumber) throws IllegalArgumentException {
-		if (strNumber == null || strNumber.isEmpty())
-			throw new UnsuppoortedMathOperationException("Please set a numeric value!");
-		String number = strNumber.replace(",", ".");
-		return Double.parseDouble(number);
-	}
-
-	private boolean isNumeric(String strNumber) {
-		if (strNumber == null || strNumber.isEmpty()) return false;
-		String number = strNumber.replace(",", ".");
-		return number.matches("[-+]?[0-9]*\\.?[0-9]+");
-	}
-	
-	
 	// http://localhost:8080/math/subtraction/3/5
 	// http://localhost:8080/math/division/3/5
 	

@@ -1,4 +1,4 @@
-package com.github.fwerther28.rest_with_spring_boot_and_java.services;
+package com.github.fwerther28.rest_with_spring_boot_and_java.math;
 
 import org.springframework.stereotype.Service;
 
