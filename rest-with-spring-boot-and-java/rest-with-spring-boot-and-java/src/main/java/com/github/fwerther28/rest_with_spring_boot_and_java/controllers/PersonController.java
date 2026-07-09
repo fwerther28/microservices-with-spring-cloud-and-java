@@ -30,4 +30,13 @@ public class PersonController {
     public Person findById(@PathVariable("id") String id) {
         return service.findById(id);
     }
+
+    @RequestMapping(
+            method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public Person create(@RequestBody Person person) {
+        return service.create(person);
+    }
 }
