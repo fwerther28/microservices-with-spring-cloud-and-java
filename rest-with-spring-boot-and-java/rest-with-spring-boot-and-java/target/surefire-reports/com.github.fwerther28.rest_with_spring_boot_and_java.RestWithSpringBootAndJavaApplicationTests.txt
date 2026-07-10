@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.github.fwerther28.rest_with_spring_boot_and_java.RestWithSpringBootAndJavaApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 6.546 s -- in com.github.fwerther28.rest_with_spring_boot_and_java.RestWithSpringBootAndJavaApplicationTests
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.850 s -- in com.github.fwerther28.rest_with_spring_boot_and_java.RestWithSpringBootAndJavaApplicationTests
