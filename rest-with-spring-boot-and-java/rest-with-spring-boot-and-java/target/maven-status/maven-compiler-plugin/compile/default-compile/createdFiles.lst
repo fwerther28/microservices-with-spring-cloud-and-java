@@ -1,5 +1,6 @@
 com\github\fwerther28\rest_with_spring_boot_and_java\model\Person.class
 com\github\fwerther28\rest_with_spring_boot_and_java\services\PersonServices.class
+com\github\fwerther28\rest_with_spring_boot_and_java\controllers\TestLogController.class
 com\github\fwerther28\rest_with_spring_boot_and_java\exception\ResourceNotFoundException.class
 com\github\fwerther28\rest_with_spring_boot_and_java\exception\ExceptionResponse.class
 com\github\fwerther28\rest_with_spring_boot_and_java\repository\PersonRepository.class
