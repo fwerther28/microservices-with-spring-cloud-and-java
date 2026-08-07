@@ -8,4 +8,5 @@
           server:
             git:
               uri: https://github.com/fwerther28/config-server-repository
-              search-paths: 'greeting-service*'
+              search-paths: greeting-service
+              default-label: main
