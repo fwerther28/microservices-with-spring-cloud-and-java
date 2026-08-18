@@ -2,6 +2,7 @@ package com.github.fwerther28.controller;
 
 import com.github.fwerther28.environment.InstanceInformationService;
 import com.github.fwerther28.model.Book;
+import com.github.fwerther28.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,10 @@ public class BookController {
     @Autowired
     private InstanceInformationService informationService;
 
+    @Autowired
+    private BookRepository repository;
+
+
     // http://localhost:8100/book-service/1/BRL
     @GetMapping(value = "/{id}/{currency}",
             produces = MediaType.APPLICATION_JSON_VALUE)
@@ -26,14 +31,11 @@ public class BookController {
             @PathVariable("currency") String currency
     ){
         String port = informationService.retrieveServerPort();
-        return new Book(
-                1L,
-                "Nigel Puilton",
-                "Docker Deep Dive",
-                new Date(),
-                15.8,
-                "BRL",
-                port
-        );
+
+        var book = repository.findById(id).orElseThrow();
+
+        book.setEnvironment(port);
+        book.setCurrency(currency);
+        return book;
     }
 }
