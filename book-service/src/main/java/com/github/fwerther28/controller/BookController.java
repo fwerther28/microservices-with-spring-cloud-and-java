@@ -3,6 +3,7 @@ package com.github.fwerther28.controller;
 import com.github.fwerther28.dto.Exchange;
 import com.github.fwerther28.environment.InstanceInformationService;
 import com.github.fwerther28.model.Book;
+import com.github.fwerther28.proxy.ExchangeProxy;
 import com.github.fwerther28.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -24,6 +25,8 @@ public class BookController {
 
     @Autowired
     private BookRepository repository;
+    @Autowired
+    private ExchangeProxy proxy;
 
 
     // http://localhost:8100/book-service/1/BRL
@@ -37,17 +40,9 @@ public class BookController {
 
         var book = repository.findById(id).orElseThrow();
 
-        HashMap<String, String> params = new HashMap<>();
-        params.put("amount", book.getPrice().toString());
-        params.put("from", "USD");
-        params.put("to", currency);
+        Exchange exchange = proxy.getExchange(book.getPrice(), "USD", currency);
 
-        var response = new RestTemplate()
-                .getForEntity("http://localhost:8000/exchange-service/" +
-                        "{amount}/{from}/{to}", Exchange.class, params);
-        Exchange exchange = response.getBody();
-
-        book.setEnvironment(port);
+        book.setEnvironment(port + " FEIGN");
         book.setPrice(exchange.getConvertedValue());
         book.setCurrency(currency);
         return book;
