@@ -5,17 +5,17 @@ import com.github.fwerther28.environment.InstanceInformationService;
 import com.github.fwerther28.model.Book;
 import com.github.fwerther28.proxy.ExchangeProxy;
 import com.github.fwerther28.repository.BookRepository;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
-import java.util.Date;
-import java.util.HashMap;
 
+@Tag(name = "Book Endpoint")
 @RestController
 @RequestMapping("book-service")
 public class BookController {
@@ -30,6 +30,7 @@ public class BookController {
 
 
     // http://localhost:8100/book-service/1/BRL
+    @Operation(summary = "Find a specific book by your ID")
     @GetMapping(value = "/{id}/{currency}",
             produces = MediaType.APPLICATION_JSON_VALUE)
     public Book findBook(
