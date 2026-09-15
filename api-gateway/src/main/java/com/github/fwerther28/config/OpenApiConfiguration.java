@@ -21,7 +21,7 @@ public class OpenApiConfiguration {
     }
 
     @Bean
-    @Lazy(value = false)
+    @Lazy(false)
     public List<GroupedOpenApi> apis (
             SwaggerUiConfigParameters config,
             RouteDefinitionLocator locator){
