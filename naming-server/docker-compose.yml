@@ -1,12 +1,4 @@
 services:
-  naming-server:
-    image: werther83/naming-server:0.0.1-SNAPSHOT
-    ports:
-      - 8761:8761
-    restart: always
-    networks:
-      - werther-network
-
   zipkin-server:
     image: openzipkin/zipkin:3.5.1
     ports:
@@ -15,6 +7,32 @@ services:
     networks:
       - werther-network
 
+  naming-server:
+    image: werther83/naming-server:0.0.1-SNAPSHOT
+    ports:
+      - 8761:8761
+    restart: always
+    depends_on:
+      - zipkin-server
+    networks:
+      - werther-network
+
+  api-gateway:
+    image: werther83/api-gateway:0.0.1-SNAPSHOT
+    ports:
+      - 8765:8765
+    restart: always
+    depends_on:
+      - zipkin-server
+      - naming-server
+    environment:
+      SPRING_ZIPKIN_BASEURL: http://zipkin-server:9411
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://naming-server:8761/eureka
+    networks:
+      - werther-network
+
+
+#/werther83/api-gateway:0.0.1-SNAPSHOT
 networks:
   werther-network:
     name: fwerther-networks
