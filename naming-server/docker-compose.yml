@@ -31,6 +31,33 @@ services:
     networks:
       - werther-network
 
+  book-db:
+    image: mysql:9.3.0
+    restart: always
+    environment:
+      TZ: America/Sao_Paulo
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: book_service
+    networks:
+      - werther-network
+    ports:
+      - 3310:3306 # 3310 on host -> 3306 on container
+
+  exchange-db:
+    image: mysql:9.3.0
+    restart: always
+    environment:
+      TZ: America/Sao_Paulo
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: exchange_service
+    networks:
+      - werther-network
+    ports:
+      - 3308:3306 # 3310 on host -> 3306 on container
 
 #/werther83/api-gateway:0.0.1-SNAPSHOT
 networks:
