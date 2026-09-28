@@ -26,10 +26,17 @@ management:
   tracing:
     sampling:
       probability: 1.0
+    export:
+      zipkin:
+        enabled: true
+        endpoint: ${MANAGEMENT_ZIPKIN_TRACING_ENDPOINT:${SPRING_ZIPKIN_BASEURL:http://localhost:9411}/api/v2/spans}
   zipkin:
     tracing:
-      endpoint: ${SPRING_ZIPKIN_BASEURL:http://localhost:9411}/api/v2/spans
-    base-url: ${SPRING_ZIPKIN_BASEURL:http://localhost:9411}
+      endpoint: ${MANAGEMENT_ZIPKIN_TRACING_ENDPOINT:${SPRING_ZIPKIN_BASEURL:http://localhost:9411}/api/v2/spans}
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
 
 springdoc:
   api-docs:
@@ -37,3 +44,7 @@ springdoc:
   swagger-ui:
     url: /book-service/v3/api-docs
   override-server-url: true
+
+  logging:
+    pattern:
+      level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"

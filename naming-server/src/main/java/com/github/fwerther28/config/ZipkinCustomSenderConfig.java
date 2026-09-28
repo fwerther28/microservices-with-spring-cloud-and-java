@@ -10,12 +10,19 @@ import zipkin2.reporter.okhttp3.OkHttpSender;
 @Configuration
 public class ZipkinCustomSenderConfig {
 
-    @Value("${SPRING_ZIPKIN_BASEURL:http://localhost:9411}")
+    @Value("${SPRING_ZIPKIN_BASEURL:http://zipkin-server:9411}")
     private String zipkinBaseUrl;
 
     @Bean
     public Sender zipkinSender() {
-        String endpoint = zipkinBaseUrl + "/api/v2/spans";
+        String base = zipkinBaseUrl.endsWith("/")
+                ? zipkinBaseUrl.substring(0, zipkinBaseUrl.length() - 1)
+                : zipkinBaseUrl;
+
+        String endpoint = base.endsWith("/api/v2/spans")
+                ? base
+                : base + "/api/v2/spans";
+
         return OkHttpSender.create(endpoint);
     }
 }

@@ -27,6 +27,8 @@ services:
       - naming-server
     environment:
       SPRING_ZIPKIN_BASEURL: http://zipkin-server:9411
+      MANAGEMENT_ZIPKIN_TRACING_ENDPOINT: http://zipkin-server:9411/api/v2/spans
+      MANAGEMENT_TRACING_SAMPLING_PROBABILITY: "1.0"
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://naming-server:8761/eureka
     networks:
       - werther-network
@@ -43,7 +45,7 @@ services:
     networks:
       - werther-network
     ports:
-      - 3310:3306 # 3310 no host Windows -> 3306 interno do contentor
+      - 3310:3306
 
   exchange-db:
     image: mysql:9.3.0
@@ -57,7 +59,7 @@ services:
     networks:
       - werther-network
     ports:
-      - 3308:3306 # 3308 no host Windows -> 3306 interno do contentor
+      - 3308:3306
 
   exchange-service:
     image: werther83/exchange-service:0.0.1-SNAPSHOT
@@ -68,6 +70,8 @@ services:
     environment:
       TZ: America/Sao_Paulo
       SPRING_ZIPKIN_BASEURL: http://zipkin-server:9411
+      MANAGEMENT_ZIPKIN_TRACING_ENDPOINT: http://zipkin-server:9411/api/v2/spans
+      MANAGEMENT_TRACING_SAMPLING_PROBABILITY: "1.0"
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://naming-server:8761/eureka
       SPRING_DATASOURCE_URL: jdbc:mysql://exchange-db:3306/exchange_service?useSSL=false&allowPublicKeyRetrieval=true&useTimezone=true&serverTimezone=UTC
       SPRING_DATASOURCE_USERNAME: ${MYSQL_USER}
@@ -90,6 +94,8 @@ services:
     environment:
       TZ: America/Sao_Paulo
       SPRING_ZIPKIN_BASEURL: http://zipkin-server:9411
+      MANAGEMENT_ZIPKIN_TRACING_ENDPOINT: http://zipkin-server:9411/api/v2/spans
+      MANAGEMENT_TRACING_SAMPLING_PROBABILITY: "1.0"
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://naming-server:8761/eureka
       SPRING_DATASOURCE_URL: jdbc:mysql://book-db:3306/book_service?useSSL=false&allowPublicKeyRetrieval=true&useTimezone=true&serverTimezone=UTC
       SPRING_DATASOURCE_USERNAME: ${MYSQL_USER}
