@@ -46,3 +46,4 @@ The project follows a strict layered architecture to ensure high cohesion and lo
       │    └── handler/     # Global interceptor (@ControllerAdvice)
       ├── model/            # Business entities and data representation
       └── RestWithSpringBootAndJavaApplication.java # Spring Boot bootstrapper
+
