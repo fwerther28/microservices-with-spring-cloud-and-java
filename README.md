@@ -48,3 +48,5 @@ The project follows a strict layered architecture to ensure high cohesion and lo
       └── RestWithSpringBootAndJavaApplication.java # Spring Boot bootstrapper
 
 
+
+<- Implement ZipkinCustomSenderConfig with OkHttp sender for span trigger-update: 2026-09-29 -->
