@@ -47,3 +47,4 @@ The project follows a strict layered architecture to ensure high cohesion and lo
       ├── model/            # Business entities and data representation
       └── RestWithSpringBootAndJavaApplication.java # Spring Boot bootstrapper
 
+
