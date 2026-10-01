@@ -13,11 +13,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Tag(name = "Exchange Endpoint")
 @RestController
 @RequestMapping("exchange-service")
 public class ExchangeController {
+
+    private static final Logger logger = LoggerFactory.getLogger(ExchangeController.class);
 
     @Autowired
     InstanceInformationService informationService;
@@ -32,6 +36,8 @@ public class ExchangeController {
             @PathVariable("amount") BigDecimal amount,
             @PathVariable("from") String from,
             @PathVariable("to") String to){
+
+         logger.info("Executing conversion from {} to {} with amount {}", from, to, amount);
 
          Exchange exchange = repository.findByFromAndTo(from, to);
 
