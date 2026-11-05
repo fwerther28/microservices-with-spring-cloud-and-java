@@ -42,6 +42,7 @@ public class BookController {
             @PathVariable("currency") String currency
     ){
         String port = informationService.retrieveServerPort();
+        String host = informationService.retrieveInstanceInfo();
 
         var book = repository.findById(id).orElseThrow();
 
@@ -50,8 +51,10 @@ public class BookController {
         Exchange exchange = proxy.getExchange(book.getPrice(), "USD", currency);
 
         //book.setEnvironment(port + " FEIGN");
-        book.setEnvironment("BOOK PORT: " + port +
-                " EXCHANGE PORT: " + exchange.getEnvironment());
+        book.setEnvironment(
+                "BOOK HOST: " + host + "PORT: " + port +
+                " VERSION: kube-v1" +
+                " EXCHANGE HOST: " + exchange.getEnvironment());
         book.setPrice(exchange.getConvertedValue());
         book.setCurrency(currency);
         return book;
