@@ -7,6 +7,8 @@ import com.github.fwerther28.proxy.ExchangeProxy;
 import com.github.fwerther28.repository.BookRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("book-service")
 public class BookController {
+
+    private Logger logger = LoggerFactory.getLogger(BookController.class);
 
     @Autowired
     private InstanceInformationService informationService;
@@ -40,6 +44,8 @@ public class BookController {
         String port = informationService.retrieveServerPort();
 
         var book = repository.findById(id).orElseThrow();
+
+        logger.info("Calculatin the converted price of the book from {} USD to {}.", book.getPrice(), currency);
 
         Exchange exchange = proxy.getExchange(book.getPrice(), "USD", currency);
 

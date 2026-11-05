@@ -109,4 +109,5 @@ services:
 networks:
   werther-network:
     name: fwerther-networks
-    driver: bridge  
+    driver: bridge
+
