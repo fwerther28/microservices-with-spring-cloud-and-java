@@ -1,5 +1,7 @@
+/*
 package com.github.fwerther28.config;
 
+*/
 /*
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
