@@ -25,4 +25,4 @@ public class InstanceInformationService implements ApplicationListener<WebServer
     public String retrieveInstanceInfo() {
         return hostName.substring(hostName.length()-5);
     }
-}
+}   
