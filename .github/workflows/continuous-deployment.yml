@@ -1,10 +1,8 @@
- name: Microservices Continuous Deployment with GitHub Actions
+name: Microservices Continuous Deployment with GitHub Actions
 
 on:
   push:
     branches:
-    - "main"
-    - "main"
     - "main"
 jobs:
   build:
