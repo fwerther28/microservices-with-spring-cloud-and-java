@@ -52,7 +52,7 @@ public class BookController {
 
         //book.setEnvironment(port + " FEIGN");
         book.setEnvironment(
-                "BOOK HOST: " + host + "PORT: " + port +
+                "BOOK HOST: " + host + " PORT: " + port +
                 " VERSION: kube-v1" +
                 " EXCHANGE HOST: " + exchange.getEnvironment());
         book.setPrice(exchange.getConvertedValue());
