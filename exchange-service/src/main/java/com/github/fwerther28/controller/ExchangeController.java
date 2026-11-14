@@ -1,56 +1,56 @@
-package com.github.fwerther28.controller;
+    package com.github.fwerther28.controller;
 
-import com.github.fwerther28.environment.InstanceInformationService;
-import com.github.fwerther28.model.Exchange;
-import com.github.fwerther28.repository.ExchangeRepository;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+    import com.github.fwerther28.environment.InstanceInformationService;
+    import com.github.fwerther28.model.Exchange;
+    import com.github.fwerther28.repository.ExchangeRepository;
+    import io.swagger.v3.oas.annotations.Operation;
+    import io.swagger.v3.oas.annotations.tags.Tag;
+    import org.springframework.beans.factory.annotation.Autowired;
+    import org.springframework.http.MediaType;
+    import org.springframework.web.bind.annotation.GetMapping;
+    import org.springframework.web.bind.annotation.PathVariable;
+    import org.springframework.web.bind.annotation.RequestMapping;
+    import org.springframework.web.bind.annotation.RestController;
 
-import java.math.BigDecimal;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+    import java.math.BigDecimal;
+    import org.slf4j.Logger;
+    import org.slf4j.LoggerFactory;
 
-@Tag(name = "Exchange Endpoint")
-@RestController
-@RequestMapping("exchange-service")
-public class ExchangeController {
+    @Tag(name = "Exchange Endpoint")
+    @RestController
+    @RequestMapping("exchange-service")
+    public class ExchangeController {
 
-    private static final Logger logger = LoggerFactory.getLogger(ExchangeController.class);
+        private static final Logger logger = LoggerFactory.getLogger(ExchangeController.class);
 
-    @Autowired
-    InstanceInformationService informationService;
+        @Autowired
+        InstanceInformationService informationService;
 
-    @Autowired
-    ExchangeRepository repository;
+        @Autowired
+        ExchangeRepository repository;
 
-    //http://localhost:8000/exchange-service/5/USD/BRL
-    @Operation(summary = "Get an exchange from amount of currency")
-    @GetMapping(value = "/{amount}/{from}/{to}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Exchange getExchange(
-            @PathVariable("amount") BigDecimal amount,
-            @PathVariable("from") String from,
-            @PathVariable("to") String to){
+        //http://localhost:8000/exchange-service/5/USD/BRL
+        @Operation(summary = "Get an exchange from amount of currency")
+        @GetMapping(value = "/{amount}/{from}/{to}", produces = MediaType.APPLICATION_JSON_VALUE)
+        public Exchange getExchange(
+                @PathVariable("amount") BigDecimal amount,
+                @PathVariable("from") String from,
+                @PathVariable("to") String to){
 
-         logger.info("Executing conversion from {} to {} with amount {}", from, to, amount);
+             logger.info("Executing conversion from {} to {} with amount {}", from, to, amount);
 
-         Exchange exchange = repository.findByFromAndTo(from, to);
+             Exchange exchange = repository.findByFromAndTo(from, to);
 
-         if (exchange == null) throw new RuntimeException("Currency Unsupported");
+             if (exchange == null) throw new RuntimeException("Currency Unsupported");
 
-        String port = informationService.retrieveServerPort();
-        String host = informationService.retrieveInstanceInfo();
+            String port = informationService.retrieveServerPort();
+            String host = informationService.retrieveInstanceInfo();
 
-         BigDecimal conversionFactor = exchange.getConversionFactor();
-         BigDecimal conversionValue = conversionFactor.multiply(amount);
-         exchange.setConvertedValue(conversionValue);
-         exchange.setEnvironment(host + " VERSION: kube-v1 PORT " + port);
+             BigDecimal conversionFactor = exchange.getConversionFactor();
+             BigDecimal conversionValue = conversionFactor.multiply(amount);
+             exchange.setConvertedValue(conversionValue);
+             exchange.setEnvironment(host + " VERSION: kube-v1 PORT " + port);
 
-         return exchange;
+             return exchange;
+        }
     }
-}
